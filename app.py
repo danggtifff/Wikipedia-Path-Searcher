@@ -13,11 +13,11 @@ def main():
         if "dfs_submit" in request.form:
             start = request.form.get("dfs_start")
             end = request.form.get("dfs_end")
-            dfs_result = f"Finding shortest paths from {start} to {end}..."
+            dfs_result = f"Finding a path from {start} to {end}..."
         elif "bfs_submit" in request.form:
             start = request.form.get("bfs_start")
             end = request.form.get("bfs_end")
-            bfs_result = f"Finding shortest paths from {start} to {end}..."
+            bfs_result = f"Finding a path from {start} to {end}..."
     return render_template("app.html", dfs_result=dfs_result, bfs_result=bfs_result)
 
 if __name__ == "__main__":
