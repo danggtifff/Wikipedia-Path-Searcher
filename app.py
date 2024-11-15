@@ -18,7 +18,7 @@ def main():
             start = request.form.get("bfs_start")
             end = request.form.get("bfs_end")
             bfs_result = f"Finding shortest paths from {start} to {end}..."
-    return render_template("index.html", dfs_result=dfs_result, bfs_result=bfs_result)
+    return render_template("app.html", dfs_result=dfs_result, bfs_result=bfs_result)
 
 if __name__ == "__main__":
     app.run(debug=True)
