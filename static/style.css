@@ -14,40 +14,15 @@ body {
 .main-container {
     max-width: 1200px;
     margin: 0 auto;
-    background-color: white;
     padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 40px;
-    padding: 20px 0;
-    border-bottom: 1px solid #eee;
-}
-
-.header-left, .header-right {
-    font-size: 1.5em;
-    color: #444;
-    flex: 1;
-}
-
-.header-left {
-    text-align: left;
-}
-
-.header-right {
-    text-align: right;
-}
-
-.header-center {
-    font-size: 2em;
-    color: #333;
-    flex: 2;
+.main-title {
     text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+    font-size: 2em;
+    padding-right: 20px;
 }
 
 .searchers-container {
@@ -58,10 +33,26 @@ header {
 
 .search-box {
     flex: 1;
-    background-color: #f9f9f9;
     padding: 20px;
     border-radius: 8px;
-    border: 1px solid #ddd;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.dfs-box {
+    background-color: #e0f0e0;  /* Light green */
+}
+
+.bfs-box {
+    background-color: #e0f0ff;  /* Light blue */
+}
+
+.box-header {
+    font-size: 1.5em;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+    padding: 10px;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.1);
 }
 
 .input-group {

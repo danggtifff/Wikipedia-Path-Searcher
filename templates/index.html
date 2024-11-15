@@ -8,15 +8,12 @@
 </head>
 <body>
     <div class="main-container">
-        <header>
-            <h2 class="header-left">DFS Searcher</h2>
-            <h1 class="header-center">Welcome to Wikipedia Path Finder</h1>
-            <h2 class="header-right">BFS Searcher</h2>
-        </header>
+        <h1 class="main-title">Welcome to Wikipedia Path Finder</h1>
         
         <div class="searchers-container">
-            <!-- DFS Searcher -->
-            <div class="search-box">
+            <!-- DFS Searcher Box -->
+            <div class="search-box dfs-box">
+                <h2 class="box-header">DFS Searcher</h2>
                 <form method="post">
                     <div class="input-group">
                         <input type="text" name="dfs_start" placeholder="Start Point" required>
@@ -30,8 +27,9 @@
                 </form>
             </div>
 
-            <!-- BFS Searcher -->
-            <div class="search-box">
+            <!-- BFS Searcher Box -->
+            <div class="search-box bfs-box">
+                <h2 class="box-header">BFS Searcher</h2>
                 <form method="post">
                     <div class="input-group">
                         <input type="text" name="bfs_start" placeholder="Start Point" required>
