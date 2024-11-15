@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Six Degrees of Wikipedia</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Six Degrees of Wikipedia</h1>
+        <form method="post">
+            <input type="text" name="start" placeholder="SDI Technologies" required>
+            <span class="arrow">&#8644;</span>
+            <input type="text" name="end" placeholder="Rubik's Cube" required>
+            <button type="submit">Go!</button>
+        </form>
+        
+        {% if result %}
+            <p class="result">{{ result }}</p>
+        {% endif %}
+        
+        <div class="instructions">
+            <p>Find the shortest paths from</p>
+        </div>
+    </div>
+</body>
+</html>
