@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Six Degrees of Wikipedia</title>
+    <title>Wikipedia</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <div class="container">
-        <h1>Six Degrees of Wikipedia</h1>
+        <h1>Wikipedia</h1>
         <form method="post">
-            <input type="text" name="start" placeholder="SDI Technologies" required>
+            <input type="text" name="start" placeholder="Start Point" required>
             <span class="arrow">&#8644;</span>
-            <input type="text" name="end" placeholder="Rubik's Cube" required>
+            <input type="text" name="end" placeholder="End Point" required>
             <button type="submit">Go!</button>
         </form>
         
