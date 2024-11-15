@@ -1,74 +1,107 @@
 * {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body {
     font-family: Arial, sans-serif;
-    background-color: #87ceeb;
-    color: #333;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
+    background-color: #f0f0f0;
+    min-height: 100vh;
+    padding: 20px;
 }
 
-.container {
-    text-align: center;
-    background-color: #fff;
+.main-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: white;
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    width: 300px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-h1 {
-    font-size: 1.5em;
-    color: #333;
-    margin-bottom: 10px;
-}
-
-form {
+header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 10px;
+    margin-bottom: 40px;
+    padding: 20px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.header-left, .header-right {
+    font-size: 1.5em;
+    color: #444;
+    flex: 1;
+}
+
+.header-left {
+    text-align: left;
+}
+
+.header-right {
+    text-align: right;
+}
+
+.header-center {
+    font-size: 2em;
+    color: #333;
+    flex: 2;
+    text-align: center;
+}
+
+.searchers-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 40px;
+}
+
+.search-box {
+    flex: 1;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
 }
 
 input[type="text"] {
-    padding: 8px;
-    width: 40%;
-    font-size: 1em;
+    flex: 1;
+    padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
+    font-size: 1em;
 }
 
 button {
-    padding: 8px 16px;
+    padding: 10px 20px;
     font-size: 1em;
-    color: #fff;
-    background-color: #ff6666;
+    color: white;
+    background-color: #ff4444;
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    transition: background-color 0.2s;
 }
 
 button:hover {
-    background-color: #ff4d4d;
+    background-color: #ff2222;
 }
 
 .arrow {
-    font-size: 1.5em;
-    color: #333;
+    font-size: 1.2em;
+    color: #666;
 }
 
 .result {
     margin-top: 15px;
-    font-weight: bold;
-}
-
-.instructions {
-    margin-top: 10px;
+    padding: 10px;
+    color: #444;
     font-size: 0.9em;
-    color: #555;
 }

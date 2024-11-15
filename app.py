@@ -6,15 +6,18 @@ from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
-@app.route("/", methods=["GET", "POST"])
 def main():
+    dfs_result = bfs_result = None
     if request.method == "POST":
-        start = request.form.get("start")
-        end = request.form.get("end")
-        # Add code here to perform the "degrees of separation" calculation.
-        result = f"Finding shortest paths from {start} to {end}..."
-        return render_template("index.html", result=result, start=start, end=end)
-    return render_template("index.html", result=None)
+        if "dfs_submit" in request.form:
+            start = request.form.get("dfs_start")
+            end = request.form.get("dfs_end")
+            dfs_result = f"Finding shortest paths from {start} to {end}..."
+        elif "bfs_submit" in request.form:
+            start = request.form.get("bfs_start")
+            end = request.form.get("bfs_end")
+            bfs_result = f"Finding shortest paths from {start} to {end}..."
+    return render_template("index.html", dfs_result=dfs_result, bfs_result=bfs_result)
 
 if __name__ == "__main__":
     app.run(debug=True)

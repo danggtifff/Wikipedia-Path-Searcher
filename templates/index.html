@@ -3,25 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wikipedia</title>
+    <title>Wikipedia Path Finder</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <div class="container">
-        <h1>Wikipedia</h1>
-        <form method="post">
-            <input type="text" name="start" placeholder="Start Point" required>
-            <span class="arrow">&#8644;</span>
-            <input type="text" name="end" placeholder="End Point" required>
-            <button type="submit">Go!</button>
-        </form>
+    <div class="main-container">
+        <header>
+            <h2 class="header-left">DFS Searcher</h2>
+            <h1 class="header-center">Welcome to Wikipedia Path Finder</h1>
+            <h2 class="header-right">BFS Searcher</h2>
+        </header>
         
-        {% if result %}
-            <p class="result">{{ result }}</p>
-        {% endif %}
-        
-        <div class="instructions">
-            <p>Find the shortest paths from</p>
+        <div class="searchers-container">
+            <!-- DFS Searcher -->
+            <div class="search-box">
+                <form method="post">
+                    <div class="input-group">
+                        <input type="text" name="dfs_start" placeholder="Start Point" required>
+                        <span class="arrow">➟</span>
+                        <input type="text" name="dfs_end" placeholder="End Point" required>
+                        <button type="submit" name="dfs_submit">Go!</button>
+                    </div>
+                    {% if dfs_result %}
+                        <p class="result">{{ dfs_result }}</p>
+                    {% endif %}
+                </form>
+            </div>
+
+            <!-- BFS Searcher -->
+            <div class="search-box">
+                <form method="post">
+                    <div class="input-group">
+                        <input type="text" name="bfs_start" placeholder="Start Point" required>
+                        <span class="arrow">➟</span>
+                        <input type="text" name="bfs_end" placeholder="End Point" required>
+                        <button type="submit" name="bfs_submit">Go!</button>
+                    </div>
+                    {% if bfs_result %}
+                        <p class="result">{{ bfs_result }}</p>
+                    {% endif %}
+                </form>
+            </div>
         </div>
     </div>
 </body>
