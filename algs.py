@@ -18,7 +18,19 @@ def bfs(start, end, graph):
                 queue.append(path + [neighbor])
 
 # depth-first search over adjacency list graph of wikipedia links
-def dfs(start, end, graph):
+def dfs(start, end, graph, depth_limit):
+    # start and end node handling
+    if start not in graph:
+        print(f"Start node, {start}, not in graph.")
+        return None
+
+    if end not in graph:
+        print(f"End node, {end}, not in graph.")
+
+    if not graph[start]:
+        print(f"Start node, {start}, has no connections.")
+        return None
+
     stack = []
     visited = set()
     visited.add(start)
@@ -26,10 +38,22 @@ def dfs(start, end, graph):
 
     while stack:
         path = stack.pop()
-        if path[-1] == end:
+        depth = len(path)
+        node = path[-1]
+
+        if node == end:
             return path
 
-        for neighbor in graph[path[-1]]:
-            if neighbor not in visited:
-                visited.add(neighbor)
-                stack.append(path + [neighbor])
+        if depth < depth_limit:
+            # node has no connections
+            if not graph[node]:
+                continue
+
+            for neighbor in graph[node]:
+                if neighbor not in visited:
+                    visited.add(neighbor)
+                    stack.append(path + [neighbor])
+
+    # no path found within depth limit
+    print(f"No path found within depth limit of {depth_limit}.")
+    return None
