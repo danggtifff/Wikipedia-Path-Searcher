@@ -1,43 +1,58 @@
 # Made by Daphne Calin 11/17/2024
 # To create the database, put data.csv in a folder data/
 # or change the below variable to its location.
-in_file_path = 'data/data.csv'
+in_file_path = 'data/merged.csv'
 # Change where the .db file is created
-out_file_path = 'data/wikilinks.db'
+db_file_path = 'data/wikilinks.db'
 
-import csv, sqlite3
-
-create_table = '''CREATE TABLE IF NOT EXISTS wikilinks (
-    name TEXT PRIMARY_KEY,
-    outlinks TEXT
-    );'''
+import csv, click, sqlite3
+from flask import current_app, g
 
 insert_rows = '''INSERT INTO wikilinks (name, outlinks) VALUES(?, ?)'''
 
-if __name__ == "__main__":
-    print("Creating the wikibase SQLite3 database from", in_file_path)
-    # connect to database
-    connection = sqlite3.connect(out_file_path)
+def get_db():
+    if 'db' not in g:
+        g.db = sqlite3.connect(
+            current_app.config['DATABASE'],
+            detect_types=sqlite3.PARSE_DECLTYPES
+        )
 
-    # create cursor object to execute queries
-    cursor = connection.cursor()
-
-    cursor.execute(create_table)
-
-    # open the csv file and read its contents into memory   
-    file = open(in_file_path, 'r', encoding="UTF-8")
-    contents = csv.reader(file)
+    return g.db
 
 
-    cursor.executemany(insert_rows, contents)
+def close_db(e=None):
+    db = g.pop('db', None)
 
-    connection.commit()
+    if db is not None:
+        db.close()
 
-    connection.close()
-
-    print("Database created successfully!")
-
-
-
-
+def init_db():
+    db = get_db()
     
+    with current_app.open_resource('data/schema.sql') as f:
+        db.executescript(f.read().decode('utf8'))
+    load_csv(in_file_path)
+
+
+@click.command('init-db')
+def init_db_command():
+    init_db()
+    click.echo('Initialized the database.')
+
+def load_csv(file_path):
+    db = get_db()
+    with open(file_path, 'r', encoding='utf-8') as f:
+        reader = csv.reader(f)
+        next(reader)
+        print("started up")
+        db.executemany(insert_rows, reader)
+        db.commit()
+        print("finished up")
+    f.close()
+
+def init_app(app):
+    app.teardown_appcontext(close_db)
+    app.cli.add_command(init_db_command)
+
+
+

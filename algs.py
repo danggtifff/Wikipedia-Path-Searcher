@@ -1,18 +1,38 @@
 # algs.py made for Chris
+import sqlite3, ast, json
+import db as db
+from collections import deque
+
+query = "SELECT * FROM wikilinks WHERE name = 12"
+
+def load_graph():
+    my_db = db.get_db()
+    graph = {}
+    cursor = my_db.cursor()
+    cursor.execute("SELECT name, outlinks FROM wikilinks")
+    for row in cursor.fetchall():
+        graph[row[0]] = ast.literal_eval(row[1])
+    print("Graph")
+    return graph
 
 # breadth-first search over adjacency list graph of wikipedia links
-def bfs(start, end, graph):
-    queue = []
+def bfs(start, end):
+    graph = load_graph()
+    queue = deque()
     visited = set()
     visited.add(start)
     queue.append([start])
 
     while queue:
-        path = queue.pop(0)
-        if path[-1] == end:
+        path = queue.popleft()
+        search_value = path[-1]
+        if search_value == end:
             return path
+        
+        neighbors = graph.get(search_value, [])
 
-        for neighbor in graph[path[-1]]:
+        print(search_value)
+        for neighbor in neighbors:
             if neighbor not in visited:
                 visited.add(neighbor)
                 queue.append(path + [neighbor])
