@@ -66,31 +66,42 @@ def dfs(start, end, depth_limit):
     stack = deque()
     visited = set()
     visited.add(start)
-    stack.append([start])
+    stack.append((start, 1))
     parent = {start: None}
 
-    while stack:
-        search_value = stack.pop()
-        depth = len(path)
-        node = path[-1]
+    print(f"{start}, {end}")
 
-        if node == end:
-            return path
+    while stack:
+        search_value, depth = stack.pop()
+
+
+        print(search_value, end)
+
+        print(f"Visiting: {search_value}, Stack Size: {len(stack)}, Visited Nodes: {len(visited)}")
+
+        if int(search_value) == int(end):
+            path = []
+            while search_value is not None:
+                path.append(search_value)
+                search_value = parent[search_value]
+            return path[::-1]
 
         if depth < depth_limit:
-            # node has no connections
             neighbors = fetch_neighbors(search_value)
             for neighbor in neighbors:
                 if neighbor not in visited:
                     visited.add(neighbor)
                     parent[neighbor] = search_value
-                    queue.append(neighbor)
+                    stack.append((neighbor, depth+1))
 
-            for neighbor in graph[node]:
-                if neighbor not in visited:
-                    visited.add(neighbor)
-                    stack.append(path + [neighbor])
+    if not stack:
+        print(f"No path found from {start} to {end} within depth limit of {depth_limit}.")
+        return None
 
-    # no path found within depth limit
-    print(f"No path found within depth limit of {depth_limit}.")
+def iddfs(start, end, max_depth):
+    for depth in range(1, max_depth + 1):
+        print(f"Searching with max depth: {depth}.")
+        path = dfs(start, end, depth)
+        if path is not None:
+            return path
     return None
