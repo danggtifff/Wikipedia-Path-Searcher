@@ -80,6 +80,7 @@ def dfs(start, end, depth_limit):
         print(f"Visiting: {search_value}, Stack Size: {len(stack)}, Visited Nodes: {len(visited)}")
 
         if int(search_value) == int(end):
+            print("hello there!!!")
             path = []
             while search_value is not None:
                 path.append(search_value)
