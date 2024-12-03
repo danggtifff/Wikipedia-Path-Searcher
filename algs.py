@@ -10,7 +10,7 @@ from functools import lru_cache
 import time
 
 # Load neighbors on demand with caching for repeated access
-#@lru_cache(maxsize=100000)  # Cache up to 100,000 nodes
+@lru_cache(maxsize=100000)  # Cache up to 100,000 nodes
 def fetch_neighbors(name):
     conn = db.get_db()
     cursor = conn.cursor()
