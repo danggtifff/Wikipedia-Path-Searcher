@@ -94,3 +94,21 @@ def check_id(name):
     if row:
         return row[0] # returns the name
 
+def get_a_few_neighbors(name):
+    conn = get_db()
+    cursor = conn.cursor()
+    id_query = "SELECT id FROM id_title WHERE name = ?"
+    wk_query = "SELECT outlinks FROM wikilinks WHERE name = ?"
+
+    # Get the id from the passed in name
+    cursor.execute(id_query, (name,))
+    row = cursor.fetchone()
+    if not row:
+        return None
+    
+    # Get outlinks and return up to the first 3
+    cursor.execute(wk_query, (row[0]))
+    row = cursor.fetchone()
+    neighbors = json.loads(row[0])
+    return neighbors[:3]
+
