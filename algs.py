@@ -6,26 +6,19 @@ from collections import deque
 import sqlite3
 import json
 from collections import deque
-from functools import lru_cache
+
 import time
-
-# Load neighbors on demand with caching for repeated access
-@lru_cache(maxsize=100000)  # Cache up to 100,000 nodes
-def fetch_neighbors(name):
-    conn = db.get_db()
-    cursor = conn.cursor()
-    query = "SELECT outlinks FROM wikilinks WHERE name = ?"
-    cursor.execute(query, (name,))
-    row = cursor.fetchone()
-
-    try:
-        return json.loads(row[0]) if row else []
-    except json.JSONDecodeError as e:
-        print(f"JSON decoding failed: {e}")
-        return []
 
 # breadth-first search over adjacency list graph of wikipedia links
 def bfs(start, end):
+    print("hi")
+    start = db.check_id(start)
+    end = db.check_id(end)
+    print(start, end)
+    if not (start and end):
+        print("Start or end node does not exist")
+        return
+    
     queue = deque()
     visited = set()
     visited.add(start)
@@ -44,14 +37,16 @@ def bfs(start, end):
             print("hello!!!!")
             path = []
             while search_value is not None:
-                path.append(search_value)
+                name = db.check_name(search_value)
+                path.append(name)
                 search_value = parent[search_value]
             return path[::-1]
 
         
-        neighbors = fetch_neighbors(search_value)
+        neighbors = db.fetch_neighbors(search_value)
         for neighbor in neighbors:
             if neighbor not in visited:
+                print(neighbor)
                 visited.add(neighbor)
                 parent[neighbor] = search_value
                 queue.append(neighbor)
@@ -62,6 +57,11 @@ def bfs(start, end):
 
 # depth-first search over adjacency list graph of wikipedia links
 def dfs(start, end, depth_limit):
+    start = db.check_id(start)
+    end = db.check_id(end)
+    if not start or end:
+        print("Start or end node does not exist")
+        return
 
     stack = deque()
     visited = set()
@@ -83,12 +83,13 @@ def dfs(start, end, depth_limit):
             print("hello there!!!")
             path = []
             while search_value is not None:
-                path.append(search_value)
+                name = db.check_name(search_value)
+                path.append(name)
                 search_value = parent[search_value]
             return path[::-1]
 
         if depth < depth_limit:
-            neighbors = fetch_neighbors(search_value)
+            neighbors = db.fetch_neighbors(search_value)
             for neighbor in neighbors:
                 if neighbor not in visited:
                     visited.add(neighbor)

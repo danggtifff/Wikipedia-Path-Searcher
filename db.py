@@ -1,14 +1,17 @@
 # Made by Daphne Calin 11/17/2024
 # To create the database, put data.csv in a folder data/
 # or change the below variable to its location.
-in_file_path = 'data/merged.csv'
+wikilinks_path = 'data/merged.csv'
+id_to_title_path = 'data/id_to_title.csv'
 # Change where the .db file is created
 db_file_path = 'data/wikilinks.db'
 
-import csv, click, sqlite3
+import csv, click, sqlite3, json
 from flask import current_app, g
+from functools import lru_cache
 
-insert_rows = '''INSERT INTO wikilinks (name, outlinks) VALUES(?, ?)'''
+insert_wikilinks_rows = '''INSERT INTO wikilinks (name, outlinks) VALUES(?, ?)'''
+insert_title_rows = '''INSERT INTO id_title (id, name) VALUES (?, ?)'''
 
 def get_db():
     if 'db' not in g:
@@ -31,7 +34,8 @@ def init_db():
     
     with current_app.open_resource('data/schema.sql') as f:
         db.executescript(f.read().decode('utf8'))
-    load_csv(in_file_path)
+    load_csv(wikilinks_path, insert_wikilinks_rows)
+    load_csv(id_to_title_path, insert_title_rows)
 
 
 @click.command('init-db')
@@ -39,20 +43,53 @@ def init_db_command():
     init_db()
     click.echo('Initialized the database.')
 
-def load_csv(file_path):
+def load_csv(file_path, operation):
     db = get_db()
     with open(file_path, 'r', encoding='utf-8') as f:
         reader = csv.reader(f)
         next(reader)
-        print("started up")
-        db.executemany(insert_rows, reader)
+        print("Start reading csv")
+        db.executemany(operation, reader)
         db.commit()
-        print("finished up")
+        print("Finished reading csv")
     f.close()
 
 def init_app(app):
     app.teardown_appcontext(close_db)
     app.cli.add_command(init_db_command)
 
+# Load neighbors on demand with caching for repeated access
+@lru_cache(maxsize=100000)  # Cache up to 100,000 nodes
+def fetch_neighbors(name):
+    conn = get_db()
+    cursor = conn.cursor()
+    query = "SELECT outlinks FROM wikilinks WHERE name = ?"
+    cursor.execute(query, (name,))
+    row = cursor.fetchone()
 
+    try:
+        return json.loads(row[0]) if row else []
+    except json.JSONDecodeError as e:
+        print(f"JSON decoding failed: {e}")
+        return []
+    
+def check_name(id):
+    conn = get_db()
+    print("haiiii :3")   
+    cursor = conn.cursor()
+    query = "SELECT name FROM id_title WHERE id = ?"
+    cursor.execute(query, (id,))
+    row = cursor.fetchone()
+    if row:
+        return row[1] # returns the name
+
+def check_id(name):
+    conn = get_db() 
+    print("haiiii :3")    
+    cursor = conn.cursor()
+    query = "SELECT id FROM id_title WHERE name = ?"
+    cursor.execute(query, (name,))
+    row = cursor.fetchone()
+    if row:
+        return row[0] # returns the name
 
