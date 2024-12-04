@@ -59,7 +59,7 @@ def bfs(start, end):
 def dfs(start, end, depth_limit):
     start = db.check_id(start)
     end = db.check_id(end)
-    if not start or end:
+    if not (start and end):
         print("Start or end node does not exist")
         return
 
