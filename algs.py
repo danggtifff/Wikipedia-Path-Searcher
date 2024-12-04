@@ -25,16 +25,11 @@ def bfs(start, end):
     queue.append(start)
     parent = {start: None}
 
-    print(f"{start}, {end}")
-
     while queue:
         search_value = queue.popleft()
         print(search_value, end)
-    
-        print(f"Visiting: {search_value}, Queue Size: {len(queue)}, Visited Nodes: {len(visited)}")
 
         if int(search_value) == int(end):
-            print("hello!!!!")
             path = []
             while search_value is not None:
                 name = db.check_name(search_value)
@@ -46,7 +41,6 @@ def bfs(start, end):
         neighbors = db.fetch_neighbors(search_value)
         for neighbor in neighbors:
             if neighbor not in visited:
-                print(neighbor)
                 visited.add(neighbor)
                 parent[neighbor] = search_value
                 queue.append(neighbor)
@@ -74,13 +68,7 @@ def dfs(start, end, depth_limit):
     while stack:
         search_value, depth = stack.pop()
 
-
-        print(search_value, end)
-
-        print(f"Visiting: {search_value}, Stack Size: {len(stack)}, Visited Nodes: {len(visited)}")
-
         if int(search_value) == int(end):
-            print("hello there!!!")
             path = []
             while search_value is not None:
                 name = db.check_name(search_value)
@@ -102,7 +90,6 @@ def dfs(start, end, depth_limit):
 
 def iddfs(start, end, max_depth):
     for depth in range(1, max_depth + 1):
-        print(f"Searching with max depth: {depth}.")
         path = dfs(start, end, depth)
         if path is not None:
             return path
