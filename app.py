@@ -31,7 +31,7 @@ def main():
             bfs_result = f"{bfs_result}... took {elapsed_time:.2f} ms"
             print(path)
     
-    return render_template("app.html", dfs_result=dfs_result, bfs_result=bfs_result)
+    return render_template("app.html", dfs_result=dfs_result, bfs_result=bfs_result, links=links)
 
 if __name__ == "__main__":
     app.run(debug=True)
