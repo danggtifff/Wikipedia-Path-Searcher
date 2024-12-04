@@ -2,3 +2,7 @@
 __pycache__/
 data/data.csv
 data/wikilinks.db
+data/test.csv
+data/id_to_title.csv
+data/merged.csv
+data/wikilink_graph.2006-03-01.csv
