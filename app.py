@@ -19,7 +19,7 @@ def main():
             start_time = time.time()
             path = algs.iddfs(start, end, 10000)
             elapsed_time = (time.time() - start_time) * 1000  # Convert to milliseconds
-            dfs_result = f"{dfs_result}... took {elapsed_time:.2f} ms"
+            dfs_result = f"{dfs_result}... took {elapsed_time:.2f} ms\nPath: {path}"
             print(path)
         elif "bfs_submit" in request.form:
             start = request.form.get("bfs_start")
@@ -28,7 +28,7 @@ def main():
             start_time = time.time()
             path = algs.bfs(start, end)
             elapsed_time = (time.time() - start_time) * 1000  # Convert to milliseconds
-            bfs_result = f"{bfs_result}... took {elapsed_time:.2f} ms"
+            bfs_result = f"{bfs_result}... took {elapsed_time:.2f} ms\nPath: {path}"
             print(path)
     
     return render_template("app.html", dfs_result=dfs_result, bfs_result=bfs_result)
