@@ -9,8 +9,7 @@ db.init_app(app)
 
 @app.route("/", methods=["GET", "POST"])
 def main():
-    dfs_result = bfs_result = None
-    
+    dfs_result = bfs_result = None    
     if request.method == "POST":
         if "dfs_submit" in request.form:
             start = request.form.get("dfs_start")
