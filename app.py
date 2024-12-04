@@ -3,7 +3,7 @@
 # and then run:
 # $ python -m flask run
 from flask import Flask, render_template, request
-from waitress import serve
+#from waitress import serve
 import algs, db
 
 DATABASE = 'data/wikilinks.db'
@@ -19,6 +19,8 @@ def main():
             start = request.form.get("dfs_start")
             end = request.form.get("dfs_end")
             dfs_result = f"Finding a path from {start} to {end}..."
+            path = algs.iddfs(start, end, 10000)
+            print(path)
         elif "bfs_submit" in request.form:
             start = request.form.get("bfs_start")
             end = request.form.get("bfs_end")
