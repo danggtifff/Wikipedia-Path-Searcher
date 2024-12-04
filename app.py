@@ -16,6 +16,7 @@ def main():
     if "bfs_result" not in session:
         session["bfs_result"] = ""
 
+    # renders the website
     return render_template(
         "app.html",
         dfs_result=session.get("dfs_result"),
@@ -27,9 +28,12 @@ def dfs():
     start = request.form.get("dfs_start")
     end = request.form.get("dfs_end")
 
+    # message displays when the when we get POST
     initial_message = f"Finding a path from {start} to {end}..."
+    # update message
     session["dfs_result"] = initial_message
 
+    # run and time the iddfs alg
     start_time = time.time()
     path = algs.iddfs(start, end, 10000)
     elapsed_time = (time.time() - start_time) * 1000  # Convert to milliseconds
@@ -44,9 +48,12 @@ def bfs():
     start = request.form.get("bfs_start")
     end = request.form.get("bfs_end")
 
+    # Message disaplayed when POST
     initial_message = f"Finding a path from {start} to {end}..."
+    #update message
     session["bfs_result"] = initial_message
 
+    # run and time the bfs alg
     start_time = time.time()
     path = algs.bfs(start, end)
     elapsed_time = (time.time() - start_time) * 1000  # Convert to milliseconds
