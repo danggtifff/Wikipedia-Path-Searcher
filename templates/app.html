@@ -1,6 +1,3 @@
-<!-- file inspiration taken from: 
-https://www.freecodecamp.org/news/html-starter-template-a-basic-html5-boilerplate-for-index-html/ --> 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,6 +5,7 @@ https://www.freecodecamp.org/news/html-starter-template-a-basic-html5-boilerplat
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wikipedia Path Finder</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
     <div class="main-container">
@@ -17,35 +15,67 @@ https://www.freecodecamp.org/news/html-starter-template-a-basic-html5-boilerplat
             <!-- DFS Searcher Box -->
             <div class="search-box dfs-box">
                 <h2 class="box-header">DFS Searcher</h2>
-                <form method="post">
+                <form id="dfs-form">
                     <div class="input-group">
-                        <input type="text" name="dfs_start" placeholder="Start Point" required>
+                        <input type="text" name="dfs_start" id="dfs_start" placeholder="Start Point" required>
                         <span class="arrow">➟</span>
-                        <input type="text" name="dfs_end" placeholder="End Point" required>
-                        <button type="submit" name="dfs_submit">Go!</button>
+                        <input type="text" name="dfs_end" id="dfs_end" placeholder="End Point" required>
+                        <button type="submit">Go!</button>
                     </div>
-                    {% if dfs_result %}
-                        <p class="result">{{ dfs_result }}</p>
-                    {% endif %}
+                    <p class="result" id="dfs_result">{{ dfs_result }}</p>
                 </form>
             </div>
 
             <!-- BFS Searcher Box -->
             <div class="search-box bfs-box">
                 <h2 class="box-header">BFS Searcher</h2>
-                <form method="post">
+                <form id="bfs-form">
                     <div class="input-group">
-                        <input type="text" name="bfs_start" placeholder="Start Point" required>
+                        <input type="text" name="bfs_start" id="bfs_start" placeholder="Start Point" required>
                         <span class="arrow">➟</span>
-                        <input type="text" name="bfs_end" placeholder="End Point" required>
-                        <button type="submit" name="bfs_submit">Go!</button>
+                        <input type="text" name="bfs_end" id="bfs_end" placeholder="End Point" required>
+                        <button type="submit">Go!</button>
                     </div>
-                    {% if bfs_result %}
-                        <p class="result">{{ bfs_result }}</p>
-                    {% endif %}
+                    <p class="result" id="bfs_result">{{ bfs_result }}</p>
                 </form>
             </div>
         </div>
     </div>
+
+    <script>
+        $(document).ready(function() {
+            // DFS Form Submission
+            $('#dfs-form').on('submit', function(e) {
+                e.preventDefault();
+
+                const start = $('#dfs_start').val();
+                const end = $('#dfs_end').val();
+
+                // Show the initial message
+                $('#dfs_result').text(`Finding a path from ${start} to ${end}...`);
+
+                // Send AJAX request
+                $.post('/dfs', { dfs_start: start, dfs_end: end }, function(data) {
+                    $('#dfs_result').text(data.result);
+                });
+            });
+
+            // BFS Form Submission
+            $('#bfs-form').on('submit', function(e) {
+                e.preventDefault();
+
+                const start = $('#bfs_start').val();
+                const end = $('#bfs_end').val();
+
+                // Show the initial message
+                $('#bfs_result').text(`Finding a path from ${start} to ${end}...`);
+
+                // Send AJAX request
+                $.post('/bfs', { bfs_start: start, bfs_end: end }, function(data) {
+                    $('#bfs_result').text(data.result);
+                });
+            });
+        });
+    </script>
 </body>
 </html>
