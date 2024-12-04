@@ -80,8 +80,9 @@ def check_name(id):
     query = "SELECT name FROM id_title WHERE id = ?"
     cursor.execute(query, (id,))
     row = cursor.fetchone()
+    print("row:", row)
     if row:
-        return row[1] # returns the name
+        return row[0] # returns the name
 
 def check_id(name):
     conn = get_db() 
