@@ -44,7 +44,7 @@ def dfs():
 
     # Generate the graph and save it as an image
     if path:
-        image_filename = "static/graph.png"
+        image_filename = "static/dfs_graph.png"
         G = visualize.get_graph_with_path(path)
         visualize.visualize_graph_with_path(G, path, image_filename)
 
@@ -73,7 +73,7 @@ def bfs():
 
     # Generate the graph and save it as an image
     if path:
-        image_filename = "static/graph.png"
+        image_filename = "static/bfs_graph.png"
         G = visualize.get_graph_with_path(path)
         visualize.visualize_graph_with_path(G, path, image_filename)
 
