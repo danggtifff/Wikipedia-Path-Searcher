@@ -6,7 +6,7 @@ id_to_title_path = 'data/id_to_title.csv'
 # Change where the .db file is created
 db_file_path = 'data/wikilinks.db'
 
-import csv, click, sqlite3, json
+import csv, click, sqlite3, json, random
 from flask import current_app, g
 from functools import lru_cache
 
@@ -109,4 +109,16 @@ def get_a_few_neighbors(name):
     cursor.execute(wk_query, (row[0],))
     row = cursor.fetchone()
     neighbors = json.loads(row[0],)
-    return neighbors[:3]
+    
+    #sample 3 neighbors
+    if len(neighbors) > 3:
+        neighbors = random.sample(neighbors, 3)
+
+    neighbor_names = []
+
+    for neighbor in neighbors:
+        neighbor_name = check_name(neighbor)  # Use check_name to get the neighbor's name
+        if neighbor_name:  # Ensure valid name is returned
+            neighbor_names.append(neighbor_name)
+
+    return neighbor_names

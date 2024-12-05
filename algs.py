@@ -11,7 +11,7 @@ import time
 
 # breadth-first search over adjacency list graph of wikipedia links
 def bfs(start, end):
-    print("hi")
+    #print("hi")
     start = db.check_id(start)
     end = db.check_id(end)
     print(start, end)
@@ -27,7 +27,7 @@ def bfs(start, end):
 
     while queue:
         search_value = queue.popleft()
-        print(search_value, end)
+        #print(search_value, end)
 
         if int(search_value) == int(end):
             path = []
