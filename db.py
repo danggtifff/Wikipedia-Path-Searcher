@@ -95,27 +95,18 @@ def check_id(name):
         return row[0] # returns the name
 
 def get_a_few_neighbors(name):
-    conn = get_db() 
+    conn = get_db()
     cursor = conn.cursor()
-
-    # Query to get the id for the node name
     id_query = "SELECT id FROM id_title WHERE name = ?"
-    # Query to get the outlinks for the node by id
     wk_query = "SELECT outlinks FROM wikilinks WHERE name = ?"
-
-    # Get the id for the node name
-    cursor.execute(id_query, (name,)) 
+    # Get the id from the passed in name
+    cursor.execute(id_query, (name,))
     row = cursor.fetchone()
-
     if not row:
-        return None  # Return None if no such node exists
-
-    # Get the outlinks (neighbors) using the node's id
-    cursor.execute(wk_query, (name,))
+        return None
+    
+    # Get outlinks and return up to the first 3
+    cursor.execute(wk_query, (row[0],))
     row = cursor.fetchone()
-
-    if row and row[0]:
-        neighbors = json.loads(row[0])  
-        return neighbors[:3] 
-    else:
-        return []  # Return an empty list if no neighbors are found
+    neighbors = json.loads(row[0],)
+    return neighbors[:3]
