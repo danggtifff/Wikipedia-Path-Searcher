@@ -41,7 +41,7 @@ def visualize_graph_with_path(G, path, image_filename="static/graph.png"):
             node_colors.append("lightblue")  # Other nodes in light blue
 
     # Draw the graph with custom colors and save it as an image
-    plt.figure(figsize=(7, 7))
+    plt.figure(figsize=(5.5, 5.5))
     nx.draw(G, with_labels=True, node_color=node_colors, edge_color=edge_colors,
             font_size=10, node_size=1500, font_weight="bold", width=2)
     plt.savefig(image_filename)
