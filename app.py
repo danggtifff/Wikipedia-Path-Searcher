@@ -52,7 +52,7 @@ def dfs():
         image_url = f"{image_filename}?t={int(time.time())}"
 
         # Return the image URL to the frontend
-        return jsonify(result=final_message, image_url=image_filename)
+        return jsonify(result=final_message, image_url=image_url)
     else:
         return jsonify(result=final_message)
 
@@ -80,8 +80,11 @@ def bfs():
         G = visualize.get_graph_with_path(path)
         visualize.visualize_graph_with_path(G, path, image_filename)
 
+        # Add a unique query string to the image URL so that it'll update the image even if cached
+        image_url = f"{image_filename}?t={int(time.time())}"
+
         # Return the image URL to the frontend
-        return jsonify(result=final_message, image_url=image_filename)
+        return jsonify(result=final_message, image_url=image_url)
     else:
         return jsonify(result=final_message)
 
