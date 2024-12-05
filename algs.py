@@ -63,7 +63,7 @@ def dfs(start, end, depth_limit):
     stack.append((start, 1))
     parent = {start: None}
 
-    print(f"{start}, {end}")
+    #print(f"{start}, {end}")
 
     while stack:
         search_value, depth = stack.pop()
@@ -85,7 +85,7 @@ def dfs(start, end, depth_limit):
                     stack.append((neighbor, depth+1))
 
     if not stack:
-        print(f"No path found from {start} to {end} within depth limit of {depth_limit}.")
+        #print(f"No path found from {start} to {end} within depth limit of {depth_limit}.")
         return None
 
 def iddfs(start, end, max_depth):
