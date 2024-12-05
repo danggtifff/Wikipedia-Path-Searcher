@@ -33,8 +33,9 @@ body {
 
 .searchers-container {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     gap: 40px;
+    margin: 0 auto;
 }
 
 .search-box {
