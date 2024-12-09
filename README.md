@@ -1,7 +1,9 @@
 to run this, set up Flask with 
 https://flask.palletsprojects.com/en/stable/installation/
 and then run:
-$ python -m flask run. db.py should also be run before starting the server.
+$ flask init-db
+then:
+$ python -m flask run
 
 This is a video to display the functionality:
 
